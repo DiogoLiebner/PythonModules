@@ -29,6 +29,12 @@ class Plant:
             self.old = n
             print(f"Age updated: {self.old} days\n")
 
+    def get_height(self):
+        print(f"{self.name} Height: {self.heigh} cm")
+
+    def get_ate(self):
+        print(f"{self.name} Age: {self.old} Days")
+
     def show(self):
         return f"{self.name}: {self.height:.1f} cm, {self.old:.0f} days old"
 
