@@ -1,5 +1,4 @@
 class Plant:
-
     class Stats:
         def __init__(self):
             self._grow_calls = 0
@@ -17,14 +16,14 @@ class Plant:
         self._old = int(old)
         self.growth = 0
         self.growrate = float(growrate)
-        self._stats = Plant.Stats()          # each plant gets its own Stats
+        self._stats = Plant.Stats()
 
     @staticmethod
-    def is_older_than_year(age):                # no self or cls needed
+    def is_older_than_year(age):
         return age > 365
 
     @classmethod
-    def anonymous(cls):                         # alternative constructor
+    def anonymous(cls):
         return cls("Unknown", 0, 0, 0.0)
 
     def grow(self):
@@ -63,7 +62,6 @@ class Plant:
         return f"{self.name}: {self._height:.1f} cm, {self._old:.0f} days old"
 
 
-# ── Flower ─────────────────────────────────────────────────────────────
 class Flower(Plant):
     def __init__(self, name, height, old, growrate, color, bloomtime):
         super().__init__(name, height, old, growrate)
@@ -73,7 +71,7 @@ class Flower(Plant):
 
     @classmethod
     def anonymous(cls):
-        return cls("Unknown", 0, 0, 0.0, "unknown", 0)   # extra fields for Flower
+        return cls("Unknown", 0, 0, 0.0, "unknown", 0)
 
     def bloom_flower(self):
         if self._old >= self.bloom:
@@ -89,44 +87,40 @@ class Flower(Plant):
         return f"{base}, color: {self.color}, bloom at: {self.bloom} days [{status}]"
 
 
-# ── Seed ───────────────────────────────────────────────────────────────
 class Seed(Flower):
     def __init__(self, name, height, old, growrate, color, bloomtime, seed_count=0):
         super().__init__(name, height, old, growrate, color, bloomtime)
-        self._seed_count = seed_count               # 0 until flower has bloomed
+        self._seed_count = seed_count
 
     @classmethod
     def anonymous(cls):
         return cls("Unknown", 0, 0, 0.0, "unknown", 0, 0)
 
     def bloom_flower(self):
-        super().bloom_flower()                      # run Flower's bloom logic
+        super().bloom_flower()
         if self._blooming:
-            self._seed_count = 10                   # seeds appear once bloomed
+            self._seed_count = 10
 
     def show(self):
-        base = super().show()                       # Flower → Plant output
+        base = super().show()
         return f"{base}, seeds: {self._seed_count}"
 
 
-# ── Tree ───────────────────────────────────────────────────────────────
 class Tree(Plant):
-
-    # extends Plant.Stats with an extra counter
     class Stats(Plant.Stats):
         def __init__(self):
             super().__init__()
             self._shade_calls = 0
 
         def display(self):
-            super().display()                       # show base stats first
-            print(f"    produce_shade() calls : {self._shade_calls}")
+            super().display()
+            print(f"produce_shade() calls : {self._shade_calls}")
 
     def __init__(self, name, height, old, growrate, trunk, shade):
         super().__init__(name, height, old, growrate)
         self.trunk = trunk
         self.shade = trunk * self._height
-        self._stats = Tree.Stats()                  # override with Tree's Stats
+        self._stats = Tree.Stats()
 
     @classmethod
     def anonymous(cls):
@@ -134,7 +128,7 @@ class Tree(Plant):
 
     def grow(self):
         super().grow()
-        self.shade = self.trunk * self._height      # recalculate shade after growing
+        self.shade = self.trunk * self._height
 
     def produce_shade(self):
         self._stats._shade_calls += 1
@@ -145,12 +139,11 @@ class Tree(Plant):
         return f"{base}, trunk: {self.trunk:.1f} cm, shade: {self.shade:.1f} m²"
 
 
-# ── Vegetable ──────────────────────────────────────────────────────────
 class Vegetable(Plant):
     def __init__(self, name, height, old, growrate, harvest, nutrients):
         super().__init__(name, height, old, growrate)
         self.harvest = harvest
-        self.nutrients = 0                          # always starts at 0
+        self.nutrients = 0
 
     @classmethod
     def anonymous(cls):
@@ -169,13 +162,11 @@ class Vegetable(Plant):
         return f"{base}, harvest: {self.harvest} days, nutrients: {self.nutrients}"
 
 
-# ── Standalone stats display function ─────────────────────────────────
 def display_stats(plant):
     print(f"  Stats for [{plant.name}]:")
     plant._stats.display()
 
 
-# ── Main ───────────────────────────────────────────────────────────────
 def main():
     print("=" * 55)
     print("            CREATING PLANTS")
@@ -191,7 +182,6 @@ def main():
     print(carrot.show())
     print(tulip.show())
 
-    # --- Anonymous plants ---
     print("\n" + "=" * 55)
     print("          ANONYMOUS PLANTS")
     print("=" * 55)
@@ -203,7 +193,6 @@ def main():
     print(anon_flower.show())
     print(anon_tree.show())
 
-    # --- Static method ---
     print("\n" + "=" * 55)
     print("          AGE CHECKS")
     print("=" * 55)
@@ -211,18 +200,16 @@ def main():
     print(f"Is oak older than a year?    {Plant.is_older_than_year(oak.get_age())}")
     print(f"Is carrot older than a year? {Plant.is_older_than_year(carrot.get_age())}")
 
-    # --- Flower blooming / Seed ---
     print("\n" + "=" * 55)
     print("         BLOOMING & SEEDS")
     print("=" * 55)
 
-    tulip.bloom_flower()                        # not ready yet
+    tulip.bloom_flower()
     for _ in range(10):
         tulip.age()
-    tulip.bloom_flower()                        # now blooms and gets seeds
+    tulip.bloom_flower()
     print(tulip.show())
 
-    # --- Vegetable nutrients ---
     print("\n" + "=" * 55)
     print("        VEGETABLE NUTRIENTS")
     print("=" * 55)
@@ -234,7 +221,6 @@ def main():
         carrot.age()
     print(carrot.show())
 
-    # --- Tree shade ---
     print("\n" + "=" * 55)
     print("           TREE SHADE")
     print("=" * 55)
@@ -244,13 +230,12 @@ def main():
     oak.grow()
     print(oak.produce_shade())
 
-    # --- Statistics ---
     print("\n" + "=" * 55)
     print("           STATISTICS")
     print("=" * 55)
 
     display_stats(rose)
-    display_stats(oak)          # will also show produce_shade() calls
+    display_stats(oak)
     display_stats(carrot)
     display_stats(tulip)
 
