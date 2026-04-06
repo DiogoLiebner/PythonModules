@@ -17,21 +17,20 @@ def test_error_types(operation_number):
             print(a + b + a)
         else:
             print("Operation completed successfully\n")
-
     except (ValueError, ZeroDivisionError, FileNotFoundError,
             TypeError) as error:
         match error:
             case ValueError():
                 print("Caught ValueError: invalid literal for \
-                      int() with base 10: 'abc'\n")
+int() with base 10: 'abc'\n")
             case ZeroDivisionError():
                 print("Caught ZeroDivisionError: division by zero\n")
             case FileNotFoundError():
-                print("Caught FileNotFoundError: [Hello_World.txt]\
-                        No such file or directory: '/non/existent/file'\n")
+                print("Caught FileNotFoundError: [Hello_World.txt] \
+No such file or directory: '/non/existent/file'\n")
             case TypeError():
                 print("Caught TypeError: can only concatenate str \
-                      (not 'int') to str\n")
+(not 'int') to str\n")
 
 
 def garden_operations(operation_number):
