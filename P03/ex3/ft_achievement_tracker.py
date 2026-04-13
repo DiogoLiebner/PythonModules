@@ -40,11 +40,8 @@ def gen_player_achievements() -> None:
     dylan_missing = set(set(achievements) - set(dylan))
 
     print(f"Alice is missing : {alice_missing}\n")
-
     print(f"Bob is missing : {bob_missing}\n")
-
     print(f"Charlie is missing : {charlie_missing}\n")
-
     print(f"Dylan is missing : {dylan_missing}\n")
 
 

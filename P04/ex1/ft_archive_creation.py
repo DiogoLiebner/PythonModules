@@ -23,6 +23,29 @@ directory: '{filename}'")
                 print(f"Error opening file '{filename}': [Errno 13] Permission\
 denied: '{filename}'")
 
+    print("Transformm data:")
+    print("---\n")
+    with open(filename, "r") as f:
+        for line in f:
+            line = line.rstrip("\n")
+            print(line + "#")
+
+    print("---\n")
+
+    output_filename = input("Enter new file name (or empty): ")
+    if output_filename == "":
+        print("Not Saving Data.")
+    else:
+        print(f"Saving data to '{output_filename}.'")
+        fout = open(output_filename, "w")
+        fin = open(filename, "r")
+        for line in fin:
+            line = line.rstrip("\n")
+            fout.write(line + "#\n")
+        fin.close()
+        fout.close()
+        print(f"Data saved in file '{output_filename}.'")
+
 
 if __name__ == "__main__":
     main()
