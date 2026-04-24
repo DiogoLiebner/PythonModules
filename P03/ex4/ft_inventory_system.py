@@ -22,7 +22,8 @@ invalid literal for int() with base 10: 'value'")
     print(f"Got inventory: {items}")
     print(f"Item list: {list(items.keys())}")
     print(f"Total quantity of the {len(items)} items: {sum(items.values())}")
-    for name, quantity in items.items():
+    for name in items.keys():
+        quantity = items[name]
         print(f"Item {name} represents\
  {(quantity / sum(items.values()))*100:.1f}%")
 
