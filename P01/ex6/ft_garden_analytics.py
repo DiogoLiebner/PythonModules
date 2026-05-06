@@ -139,6 +139,8 @@ class Tree(Plant):
             super().display()
             print(f"{self._shade_calls} shade")
 
+    _stats: "Tree.Stats"
+
     def __init__(
         self,
         name: str,
