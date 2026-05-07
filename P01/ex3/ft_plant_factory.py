@@ -1,23 +1,29 @@
 class Plant:
-    def __init__(self, name, height, old, growrate):
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        old: int,
+        growrate: float,
+    ) -> None:
         self.name = name
-        self.height = int(height)
+        self.height = float(height)
         self.old = int(old)
-        self.growth = 0
+        self.growth = 0.0
         self.growrate = float(growrate)
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += self.growrate
         self.growth += self.growrate
 
-    def age(self):
+    def age(self) -> None:
         self.old += 1
 
-    def show(self):
-        return f"{self.name}: {self.height:.1f} cm, {self.old:.0f} days old"
+    def show(self) -> str:
+        return f"{self.name}: {round(self.height, 2)}cm, {self.old} days old"
 
 
-def main():
+def main() -> None:
     rose = Plant("Rose", 25, 30, 0.8)
     oak = Plant("Oak", 200, 365, 0.7)
     cactus = Plant("Cactus", 5, 90, 0.1)
