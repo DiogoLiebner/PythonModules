@@ -1,4 +1,4 @@
-import light_validator
+from . import light_validator
 
 
 def light_spell_allowed_ingredients() -> list:
@@ -9,7 +9,7 @@ def light_spell_record(spell_name: str, ingredients: str) -> str:
     validation_result = light_validator.validate_ingredients(ingredients)
 
     if "VALID" in validation_result:
-        msg = f"Spell '{spell_name}' recorded with ingredients: {ingredients}"
+        msg = f"Spell recorded: {spell_name} ({ingredients} - VALID)"
         return msg
     else:
         invalid_msg = "Spell '{}' rejected. Invalid ingredients: {}"

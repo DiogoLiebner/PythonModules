@@ -1,4 +1,4 @@
-import light_spellbook
+from . import light_spellbook
 
 
 def validate_ingredients(ingredients: str) -> str:
