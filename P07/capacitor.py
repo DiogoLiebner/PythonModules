@@ -1,9 +1,9 @@
-import ex0.creaturefactory as cf
+import ex1.creaturefactoryevolved as cfe
 
 
 def main() -> None:
-    flame_factory = cf.FlameFactory()
-    aqua_factory = cf.AquaFactory()
+    flame_factory = cfe.FlameFactory()
+    aqua_factory = cfe.AquaFactory()
 
     flame_base = flame_factory.create_base()
     flame_evolved = flame_factory.create_evolved(flame_base)
