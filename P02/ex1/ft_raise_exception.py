@@ -1,4 +1,4 @@
-def input_temperature(temp_str):
+def input_temperature(temp_str: str) -> None:
     print(f"Input data is '{temp_str}'")
     try:
         intstr = int(temp_str)
@@ -15,7 +15,7 @@ def input_temperature(temp_str):
 invalid literal for int() with base 10: '{temp_str}'\n")
 
 
-def test_temperature():
+def test_temperature() -> None:
     input_temperature('25')
     input_temperature('abc')
     input_temperature('100')
@@ -23,7 +23,7 @@ def test_temperature():
     print("All tests completed - program didn't crash!\n")
 
 
-def main():
+def main() -> None:
     print("=== Garden Temperature ===\n")
     test_temperature()
 
