@@ -2,7 +2,7 @@ class GardenError(Exception):
     """
         Base error for all garden-related problems.
     """
-    def __init__(self, message="Unknown garden error"):
+    def __init__(self, message="Unknown garden error": str) -> None:
         self.message = message
         super().__init__(self.message)
 
@@ -11,21 +11,17 @@ class WaterError(GardenError):
     """
         Exception raised when problem found with watering
     """
-    def __init__(self, plant, message="GardenError"):
+    def __init__(self, plant, message="GardenError") -> None:
         self.message = message
         self.plant = plant
         super().__init__(self.message)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Caught {self.message}: Invalid plant name to water:\
 '{self.plant}'"
 
 
-def water_plant(plant_name):
-    """
-        Function calling the try/except/finally block to test for
-        uncapitalized plants
-    """
+def water_plant(plant_name: str) -> None:
     try:
         if plant_name != str.capitalize(plant_name):
             raise WaterError(plant_name, "WaterError")
@@ -37,8 +33,7 @@ def water_plant(plant_name):
         pass
 
 
-def test_watering_system():
-    # Testing Valid Plants with correct capitalization
+def test_watering_system() -> None:
     print("Testing valid plants...")
     print("Opening watering system")
     plants = [
@@ -50,7 +45,6 @@ def test_watering_system():
         water_plant(plant)
     print("Closing watering systems")
 
-    # Testing Invalid Plants with some incorrect capitalization
     print("\nTesting invalid plants...")
     print("Opening watering system")
     invalid_plants = [
@@ -64,7 +58,7 @@ def test_watering_system():
     print("\nCleanup always happens, even with errors!")
 
 
-def main():
+def main() -> None:
     print("=== Garden Watering System ===\n")
     test_watering_system()
 
