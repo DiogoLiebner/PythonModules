@@ -1,4 +1,4 @@
-import typing
+from typing import Any, Protocol, Union
 from abc import ABC, abstractmethod
 
 
@@ -8,11 +8,11 @@ class DataProcessor(ABC):
         self._next_rank: int = 1
 
     @abstractmethod
-    def validate(self, data: typing.Any) -> bool:
+    def validate(self, data: Any) -> bool:
         ...
 
     @abstractmethod
-    def ingest(self, data: typing.Any) -> None:
+    def ingest(self, data: Any) -> None:
         ...
 
     def output(self) -> tuple[int, str]:
@@ -27,8 +27,16 @@ class DataProcessor(ABC):
         self._next_rank += 1
 
 
+class ExportPlugin(Protocol):
+    def process_output(
+            self,
+            data: list[tuple[int, str]]
+    ) -> None:
+        pass
+
+
 class NumericProcessor(DataProcessor):
-    def validate(self, data: typing.Any) -> bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, (int, float)):
             return True
 
@@ -39,7 +47,7 @@ class NumericProcessor(DataProcessor):
 
     def ingest(
                 self,
-                data: int | float | list[typing.Union[int, float]]
+                data: int | float | list[Union[int, float]]
             ) -> None:
         if not self.validate(data):
             raise ValueError("Improper numeric data")
@@ -52,7 +60,7 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
-    def validate(self, data: typing.Any) -> bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, str):
             return True
 
@@ -73,7 +81,7 @@ class TextProcessor(DataProcessor):
 
 
 class LogProcessor(DataProcessor):
-    def validate(self, data: typing.Any) -> bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
             return all(
                 isinstance(key, str) and isinstance(value, str)
@@ -120,10 +128,10 @@ class DataStream(DataProcessor):
         self._processors: list[DataProcessor] = []
         self._processed_counts: dict[DataProcessor, int] = {}
 
-    def validate(self, data: typing.Any) -> bool:
+    def validate(self, data: Any) -> bool:
         return False
 
-    def ingest(self, data: typing.Any) -> None:
+    def ingest(self, data: Any) -> None:
         raise NotImplementedError(
             "DataStream does not ingest single elements directly; use \
 process_stream()."
@@ -134,7 +142,7 @@ process_stream()."
             self._processors.append(proc)
             self._processed_counts[proc] = 0
 
-    def process_stream(self, stream: list[typing.Any]) -> None:
+    def process_stream(self, stream: list[Any]) -> None:
         for item in stream:
             handled = False
             for processor in self._processors:
@@ -165,50 +173,22 @@ process_stream()."
 {remaining} on processor"
             )
 
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        pass
+
+
+class CSVExportPlugin:
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        pass
+
+
+class JSONExportPlugin:
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        pass
+
 
 def main() -> None:
-    print("=== Code Nexus - Data Stream ===\n")
-    print("Initialize Data Stream...")
-
-    data_stream = DataStream()
-    numeric_processor = NumericProcessor()
-    text_processor = TextProcessor()
-    log_processor = LogProcessor()
-
-    data_stream.print_processors_stats()
-
-    print("\nRegistering Numeric Processor\n")
-    data_stream.register_processor(numeric_processor)
-
-    stream = [
-        "Hello world",
-        [3.14, -1, 2.71],
-        [
-            {"log_level": "WARNING", "log_message": "Telnet access!\
- Use ssh instead"},
-            {"log_level": "INFO", "log_message": "User wil is connected"},
-        ],
-        42,
-        ["Hi", "five"],
-    ]
-
-    print("Send first batch of data on stream:", stream)
-    data_stream.process_stream(stream)
-    data_stream.print_processors_stats()
-
-    print("\nRegistering other data processors")
-    data_stream.register_processor(text_processor)
-    data_stream.register_processor(log_processor)
-
-    print("Send the same batch again")
-    data_stream.process_stream(stream)
-    data_stream.print_processors_stats()
-
-    print(
-        "\nConsume some elements from the data\
-processors: Numeric 3, Text 2, Log 1"
-    )
-    data_stream.print_processors_stats()
+    pass
 
 
 if __name__ == "__main__":
