@@ -1,4 +1,4 @@
-def test_error_types(operation_number):
+def test_error_types(operation_number: int) -> None:
     """
         Testing different Error types
     """
@@ -33,11 +33,11 @@ No such file or directory: '/non/existent/file'\n")
 (not 'int') to str\n")
 
 
-def garden_operations(operation_number):
+def garden_operations(operation_number: int) -> None:
     test_error_types(operation_number)
 
 
-def main():
+def main() -> None:
     i = 0
     print("=== Garden Error Types Demo ===\n")
     while (i < 5):
