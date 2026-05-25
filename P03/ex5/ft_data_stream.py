@@ -6,14 +6,14 @@ players = ["Excadrill", "Ttar", "Incin", "Sneasler", "Primarina", "Farigiraf"]
 actions = ["Fake Out", "Protect", "Attack", "Switch", "use item", "Trick"]
 
 
-def gen_event():
+def gen_event() -> None:
     while True:
         name = random.choice(players)
         action = random.choice(actions)
         yield (name, action)
 
 
-def consume_event(action_list):
+def consume_event(action_list: list[str]) -> str:
     while action_list:
         event = random.choice(action_list)
         action_list.remove(event)
