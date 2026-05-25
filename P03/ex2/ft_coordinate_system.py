@@ -1,7 +1,7 @@
 import math
 
 
-def get_player_pos():
+def get_player_pos() -> None:
     while True:
         raw_coords = input("Enter new coordinates as floats in format \
 'x,y,z':")
@@ -19,7 +19,7 @@ def get_player_pos():
             print(f"Error on parameter '{coords}'")
 
 
-def main():
+def main() -> None:
     print("=== Game Coordinate System ===")
 
     print("Get a first set of coordinates")
