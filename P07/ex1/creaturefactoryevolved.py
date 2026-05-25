@@ -30,6 +30,16 @@ class TransformCapability(ABC):
         pass
 
 
+class CreatureFactory(ABC):
+    @abstractmethod
+    def create_base(self) -> Creature:
+        pass
+
+    @abstractmethod
+    def create_evolved(self, base: Creature) -> Creature:
+        pass
+
+
 class TransformCreatureFactory(CreatureFactory):
     def create_base(self) -> Creature:
         return Shiftling()
@@ -68,16 +78,6 @@ class Torragon(Creature):
 
     def attack(self) -> str:
         return "Torragon uses Hydro Pump!"
-
-
-class CreatureFactory(ABC):
-    @abstractmethod
-    def create_base(self) -> Creature:
-        pass
-
-    @abstractmethod
-    def create_evolved(self, base: Creature) -> Creature:
-        pass
 
 
 class FlameFactory(CreatureFactory):
