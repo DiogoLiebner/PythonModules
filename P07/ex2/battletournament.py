@@ -42,7 +42,7 @@ class TransformCapability(ABC):
 
 class BattleStrategy(ABC):
     @abstractmethod
-    def act(self) -> None:    
+    def act(self) -> None:
         pass
 
     @abstractmethod
@@ -104,6 +104,14 @@ class AquaFactory(CreatureFactory):
 
     def create_evolved(self, base: Creature) -> Creature:
         return Torragon()
+
+
+class GrassFactory(CreatureFactory):
+    def create_base(self) -> Creature:
+        return Sproutling()
+
+    def create_evolved(self, base: Creature) -> Creature:
+        return Bloomelle()
 
 
 class Sproutling(Creature, HealCapability):
@@ -172,7 +180,7 @@ class InvalidStrategyError(Exception):
 
 
 class NormalStrategy(BattleStrategy):
-    def __ init__(self, creature: Creature) -> None:
+    def __init__(self, creature: Creature) -> None:
         self.creature = creature
 
     def is_valid(self) -> bool:
@@ -180,7 +188,8 @@ class NormalStrategy(BattleStrategy):
 
     def act(self) -> None:
         if not self.is_valid():
-            raise InvalidStrategyError("This strategy is not valid for the creature.")
+            raise InvalidStrategyError(f"Invalid Creature \
+{self.creature} for this aggressive strategy.")
         print(self.creature.attack())
 
 
@@ -193,13 +202,14 @@ class AggressiveStrategy(BattleStrategy):
 
     def act(self) -> None:
         if not self.is_valid():
-            raise InvalidStrategyError("This strategy is not valid for the creature.")
+            raise InvalidStrategyError("Invalid Creature \
+{self.creature} for this aggressive strategy.")
         print(self.creature.transform())
         print(self.creature.attack())
         print(self.creature.revert())
 
 
-def DefensiveStrategy(BattleStrategy):
+class DefensiveStrategy(BattleStrategy):
     def __init__(self, creature: Creature) -> None:
         self.creature = creature
 
@@ -208,6 +218,7 @@ def DefensiveStrategy(BattleStrategy):
 
     def act(self) -> None:
         if not self.is_valid():
-            raise InvalidStrategyError("This strategy is not valid for the creature.")
+            raise InvalidStrategyError("Invalid Creature \
+{self.creature} for this aggressive strategy.")
         print(self.creature.attack())
         print(self.creature.heal())
