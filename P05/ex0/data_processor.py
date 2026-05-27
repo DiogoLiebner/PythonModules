@@ -37,7 +37,10 @@ class NumericProcessor(DataProcessor):
 
         return False
 
-    def ingest(self, data: int | float | list[typing.Union[int, float]]) -> None:
+    def ingest(
+                self,
+                data: int | float | list[typing.Union[int, float]]
+            ) -> None:
         if not self.validate(data):
             raise ValueError("Improper numeric data")
 
@@ -91,7 +94,8 @@ class LogProcessor(DataProcessor):
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
-            raise ValueError("LogProcessor only accepts dict[str, str] or lists of dict[str, str].")
+            raise ValueError("LogProcessor only accepts dict[str, str] \
+or lists of dict[str, str].")
 
         if isinstance(data, list):
             for item in data:
@@ -103,14 +107,15 @@ class LogProcessor(DataProcessor):
         log_level = data.get("log_level", "")
         log_message = data.get("log_message", "")
 
-        if isinstance(log_level, str) and isinstance(log_message, str) and log_level and log_message:
+        if isinstance(log_level, str) \
+                and isinstance(log_message, str) and log_level and log_message:
             return f"{log_level}: {log_message}"
 
         return ", ".join(f"{key}={value}" for key, value in data.items())
 
 
 def main():
-    print("=== Code Nexus - Data Processor ===")
+    print("=== Code Nexus - Data Processor ===\n")
 
     numeric_processor = NumericProcessor()
     text_processor = TextProcessor()
@@ -118,7 +123,8 @@ def main():
 
     print("Testing Numeric Processor...")
     print("Trying to validate input '42':", numeric_processor.validate(42))
-    print("Trying to validate input 'Hello':", numeric_processor.validate("Hello"))
+    print("Trying to validate input 'Hello':",
+          numeric_processor.validate("Hello"))
     print("Test invalid ingestion of string 'foo' without prior validation:")
 
     try:
@@ -134,7 +140,7 @@ def main():
         _, value = numeric_processor.output()
         print(f"Numeric value {index}: {value}")
 
-    print("Testing Text Processor...")
+    print("\nTesting Text Processor...")
     print("Trying to validate input '42':", text_processor.validate(42))
     print("Processing data: ['Hello', 'Nexus', 'World']")
     text_processor.ingest(["Hello", "Nexus", "World"])
@@ -142,10 +148,11 @@ def main():
     _, text_value = text_processor.output()
     print("Text value 0:", text_value)
 
-    print("Testing Log Processor...")
+    print("\nTesting Log Processor...")
     print("Trying to validate input 'Hello':", log_processor.validate("Hello"))
     print(
-        "Processing data: [{'log_level': 'NOTICE', 'log_message': 'Connection to server'}, "
+        "Processing data: [{'log_level': 'NOTICE', 'log_message': \
+'Connection to server'}, "
         "{'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}]"
     )
 
